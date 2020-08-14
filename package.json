@@ -4,7 +4,9 @@
   "description": "A city evolution simulation not unlike The Game Of Life.\r Built with React.js.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "",
+    "dev": ""
   },
   "repository": {
     "type": "git",
