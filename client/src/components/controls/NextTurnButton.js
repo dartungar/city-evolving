@@ -3,18 +3,24 @@ import GameContext from "../../context/game/gameContext";
 
 const NextTurnButton = () => {
   const gameContext = useContext(GameContext);
-  const { recalculateField, tiles } = gameContext;
+  const { onChangeTurn, tiles, incrementTurnCounter } = gameContext;
 
   const style = {
     fontSize: "3rem",
     color: "royalblue",
     cursor: "pointer",
+    margin: "1rem",
   };
+
+  const handleClick = () => {
+    onChangeTurn(tiles);
+    incrementTurnCounter();
+  };
+
   return (
     <div style={style}>
-      {" "}
-      <a role="button" onClick={() => recalculateField(tiles)}>
-        <i class="fas fa-arrow-alt-circle-right"></i>
+      <a role="button" onClick={handleClick} href="#?">
+        <i className="fas fa-arrow-alt-circle-right"></i>
       </a>
     </div>
   );

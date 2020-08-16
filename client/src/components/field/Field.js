@@ -45,7 +45,7 @@ const Field = () => {
 
   return (
     <div style={fieldStyle}>
-      {tiles && tiles.map((tile) => <Tile tile={tile} />)}
+      {tiles && tiles.map((tile) => <Tile tile={tile} key={tile.id} />)}
     </div>
   );
 };

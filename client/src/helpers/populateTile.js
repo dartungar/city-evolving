@@ -7,7 +7,7 @@ const chooseAdjacentTileToPopulate = (field, originTile) => {
   // remove tiles that are water
   adjacentTiles = adjacentTiles.filter((tile) => tile.isWater === false);
   // remove tiles that are already populated
-  adjacentTiles = adjacentTiles.filter((tile) => tile.populace === 0);
+  adjacentTiles = adjacentTiles.filter((tile) => tile.population === 0);
   // calculate the maximum possible appeal amongst adjacent tiles
   const appealValues = adjacentTiles.map((tile) => tile.appeal);
   const maximumAppeal = Math.max(...appealValues);

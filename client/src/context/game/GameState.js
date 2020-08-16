@@ -1,18 +1,58 @@
 import React, { useReducer } from "react";
 import gameContext from "./gameContext";
 import gameReducer from "./gameReducer";
-import { SET_SIZE, SET_FIELD, CLEAR_FIELD, UPDATE_TILE } from "../types";
+import {
+  SET_SIZE,
+  SET_FIELD,
+  CLEAR_FIELD,
+  UPDATE_TILE,
+  UPDATE_TURN_COUNTER,
+  RESET_TURN_COUNTER,
+  UPDATE_GAME_SCORE,
+  RESET_GAME_SCORE,
+} from "../types";
 import generateTile from "../../helpers/generateTile";
 import calculateTileResources from "../../helpers/calculateTile";
 import chooseAdjacentTileToPopulate from "../../helpers/populateTile";
+import calculateGameScore from "../../helpers/calculateGameScore";
 
 const GameState = (props) => {
   const initialState = {
     size: null,
     tiles: [],
+    turns: 0,
+    score: { population: 0, development: 0 },
   };
 
   const [state, dispatch] = useReducer(gameReducer, initialState);
+
+  // increment turn counter
+  const incrementTurnCounter = () => {
+    const newTurnCounterValue = state.turns === null ? 1 : state.turns + 1;
+    dispatch({ type: UPDATE_TURN_COUNTER, payload: newTurnCounterValue });
+  };
+
+  // reset turn counter
+  const resetTurnCounter = () => {
+    dispatch({ type: RESET_TURN_COUNTER });
+  };
+
+  // on turn change, recalculate field resources & game score
+  const onChangeTurn = (field) => {
+    recalculateField(field);
+    updateGameScore(field);
+  };
+
+  // calculate & update game score
+  const updateGameScore = (field) => {
+    const newGameScore = calculateGameScore(field);
+    dispatch({ type: UPDATE_GAME_SCORE, payload: newGameScore });
+  };
+
+  // reset game score
+  const resetGameScore = () => {
+    dispatch({ type: RESET_GAME_SCORE });
+  };
 
   // set size
   const setSize = (size) => {
@@ -24,7 +64,7 @@ const GameState = (props) => {
     dispatch({ type: SET_FIELD, payload: tiles });
   };
 
-  // create tiles based on field size
+  // initialize field: create tiles based on field size
   const initField = (size) => {
     const field = [];
     let id = 0;
@@ -52,16 +92,16 @@ const GameState = (props) => {
 
   // calculate tile changes during this turn
   const calculateTile = (field, tile) => {
-    // TODO: calculate if adjacent tile is to be populated
-    if (tile.populace > 0) {
+    if (tile.population > 0) {
       tile = calculateTileResources(field, tile);
       // TODO: remove magic numbers
-      if (tile.populace > 10) {
+      if (tile.desireToExpand > 50) {
         const tileToPopulate = chooseAdjacentTileToPopulate(field, tile);
         console.log("choosen tile to populate:", tileToPopulate);
         if (tileToPopulate) {
           populateTile(tileToPopulate);
-          tile.populace = tile.populace - 10;
+          tile.population = tile.population - 5;
+          tile.desireToExpand = 0;
           updateTile(tile);
         } else console.log("no valid tiles to populate!");
       }
@@ -78,9 +118,9 @@ const GameState = (props) => {
     populateTile(chosenTile);
   };
 
-  // populate tile
+  // populate chosen tile
   const populateTile = (tile) => {
-    tile.populace = 1;
+    tile.population = 1;
     updateTile(tile);
   };
 
@@ -94,10 +134,14 @@ const GameState = (props) => {
       value={{
         size: state.size,
         tiles: state.tiles,
+        turns: state.turns,
+        score: state.score,
         setSize,
         initField,
         populateFirstTile,
-        recalculateField,
+        incrementTurnCounter,
+        resetTurnCounter,
+        onChangeTurn,
       }}
     >
       {props.children}

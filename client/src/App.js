@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import GameState from "./context/game/GameState";
+import InfoPanel from "./components/info/InfoPanel";
 import Field from "./components/field/Field";
 import ControlPanel from "./components/controls/ControlPanel";
 
@@ -8,7 +9,7 @@ function App() {
   const containerStyle = {
     height: "100vh",
     display: "flex",
-    flexFlow: "column wrap",
+    flexFlow: "column",
     justifyContent: "center",
     alignItems: "center",
   };
@@ -16,6 +17,7 @@ function App() {
   return (
     <GameState>
       <div style={containerStyle}>
+        <InfoPanel />
         <Field />
         <ControlPanel />
       </div>

@@ -1,7 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import SubTile from "./SubTile";
 
-const Tile = ({ tile: { terrain, development, populace, resources } }) => {
+const Tile = ({ tile }) => {
+  const {
+    terrain,
+    development,
+    population,
+    wealth,
+    resources,
+    desireToExpand,
+  } = tile;
+
   const getTerrainColor = (terrain) => {
     const terrainColors = {
       plains: "lightgreen",
@@ -14,47 +24,35 @@ const Tile = ({ tile: { terrain, development, populace, resources } }) => {
     return terrainColors[terrain];
   };
 
-  const getBuildingIcon = (development) => {
-    switch (true) {
-      case development >= 1 && development < 20:
-        return "⛺";
-      case development >= 20 && development < 40:
-        return "🏠";
-      case development >= 40 && development < 60:
-        return "🏡";
-      case development >= 60 && development < 80:
-        return "🏫";
-      case development >= 80 && development < 100:
-        return "🏰";
-      case development >= 100 && development < 120:
-        return "🏤";
-      case development >= 120 && development < 140:
-        return "🏢";
-      case development >= 140:
-        return "🌆";
-      default:
-        return null;
-    }
-  };
-
   const style = {
     backgroundColor: getTerrainColor(terrain),
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: "2rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gridTemplateRows: "repeat(3, 1fr)",
+    gridGap: "1px",
   };
 
-  const title = `population: ${populace}
-  development: ${development}
-  food: ${resources.food}
-  production: ${resources.production}
-  gold: ${resources.gold}
+  const title = `population: ${population}
+                development: ${development}
+                wealth: ${wealth}
+                food: ${resources.food}
+                production: ${resources.production}
+                gold: ${resources.gold}
+                desire to expand: ${desireToExpand}
   `;
+
+  // TODO: больше вариантов, разные стороны
+  const generateSubTiles = () => {
+    const subtiles = [];
+    for (let i = 1; i <= 9; i++) {
+      subtiles.push(<SubTile tile={tile} number={i} key={`${tile.id}-${i}`} />);
+    }
+    return subtiles;
+  };
 
   return (
     <div style={style} title={title}>
-      {getBuildingIcon(development)}
+      {generateSubTiles()}
     </div>
   );
 };

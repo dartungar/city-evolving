@@ -1,13 +1,13 @@
 const generateTile = (id, x, y) => {
   // tile types
   const terrainTypes = [
-    { name: "plains", resources: { food: 3, production: 1, gold: 0 } },
-    { name: "woods", resources: { food: 1, production: 2, gold: 0 } },
+    { name: "plains", resources: { food: 3, production: 1, gold: 2 } },
+    { name: "woods", resources: { food: 1, production: 2, gold: 0.1 } },
     { name: "hills", resources: { food: 1, production: 3, gold: 1 } },
     { name: "river", resources: { food: 2, production: 0, gold: 0 } },
     {
       name: "mountains",
-      resources: { food: 0.2, production: 1, gold: 2 },
+      resources: { food: 0.2, production: 1, gold: 3 },
     },
   ];
 
@@ -28,11 +28,13 @@ const generateTile = (id, x, y) => {
     id: id,
     coordinates: { x: x, y: y },
     terrain: terrain.name,
+    isWater: terrain.name === "river" ? true : false,
     resources: terrain.resources,
     appeal: calculateTileAppeal(terrain.resources),
-    populace: 0,
+    population: 0,
     development: 0,
-    isWater: terrain.name === "river" ? true : false,
+    wealth: 0,
+    desireToExpand: 0,
   };
 
   return tile;
