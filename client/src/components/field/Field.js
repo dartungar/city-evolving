@@ -1,10 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import GameContext from "../../context/game/gameContext";
 import Tile from "../tile/Tile";
 
 const Field = () => {
   const gameContext = useContext(GameContext);
-  const { size, setSize, tiles, initTiles } = gameContext;
+  const { size, setSize, tiles, initField, populateFirstTile } = gameContext;
+  const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
 
   useEffect(() => {
     if (size === null) {
@@ -12,19 +13,34 @@ const Field = () => {
     }
 
     if (size !== null && tiles.length === 0) {
-      initTiles(size);
+      initField(size);
     }
 
     // eslint-disable-next-line
   }, [size, tiles]);
 
+  useEffect(() => {
+    setIsFirstTilePopulated(false);
+  }, []);
+
+  useEffect(() => {
+    console.log(tiles.length, isFirstTilePopulated);
+    if (tiles.length > 0 && isFirstTilePopulated === false) {
+      console.log("populating first tile...");
+      populateFirstTile(tiles);
+      setIsFirstTilePopulated(true);
+    }
+  }, [tiles, isFirstTilePopulated, populateFirstTile]);
+
   const fieldStyle = {
     display: "grid",
     gridTemplateRows: `repeat(${size}, 4rem)`,
     gridTemplateColumns: `repeat(${size}, 4rem)`,
-    gridGap: "3px",
-    justifyContent: "center",
-    alignContent: "center",
+    gridGap: "1px",
+    //justifyContent: "center",
+    //alignContent: "center",
+    padding: "1px",
+    border: "1rem solid royalblue",
   };
 
   return (

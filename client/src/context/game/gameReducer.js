@@ -1,4 +1,4 @@
-import { SET_POPULACE, SET_SIZE, SET_TILE, SET_FIELD } from "../types";
+import { SET_SIZE, SET_FIELD, CLEAR_FIELD, UPDATE_TILE } from "../types";
 
 const gameReducer = (state, action) => {
   switch (action.type) {
@@ -10,11 +10,18 @@ const gameReducer = (state, action) => {
         ...state,
         tiles: action.payload,
       };
-    case SET_TILE:
+    case CLEAR_FIELD:
+      return {
+        ...state,
+        tiles: [],
+      };
+    case UPDATE_TILE:
       return {
         ...state,
         // TODO: если тайла нет, добавить. если тайл есть - заменить
-        tiles: [...state.tiles, action.payload],
+        tiles: state.tiles.map((tile) =>
+          tile.id === action.payload.id ? action.payload : tile
+        ),
       };
     default:
       return state;
