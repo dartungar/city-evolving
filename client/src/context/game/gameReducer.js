@@ -7,6 +7,9 @@ import {
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
   RESET_GAME_SCORE,
+  SET_TARGET_TILE,
+  CLEAR_TARGET_TILE,
+  CHOOSE_FIRST_TILE,
 } from "../types";
 
 const gameReducer = (state, action) => {
@@ -31,6 +34,18 @@ const gameReducer = (state, action) => {
         tiles: state.tiles.map((tile) =>
           tile.id === action.payload.id ? action.payload : tile
         ),
+      };
+    case SET_TARGET_TILE:
+      return { ...state, targetTile: action.payload };
+    case CLEAR_TARGET_TILE:
+      return {
+        ...state,
+        targetTile: null,
+      };
+    case CHOOSE_FIRST_TILE:
+      return {
+        ...state,
+        isFirstTileChosen: true,
       };
     case UPDATE_TURN_COUNTER:
       return {

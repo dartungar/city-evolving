@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.css";
 import GameState from "./context/game/GameState";
+import ModalState from "./context/modal/ModalState";
 import InfoPanel from "./components/info/InfoPanel";
 import Field from "./components/field/Field";
 import ControlPanel from "./components/controls/ControlPanel";
 
-function App() {
+const App = () => {
   const containerStyle = {
     height: "100vh",
+    width: "100vw",
     display: "flex",
     flexFlow: "column",
     justifyContent: "center",
@@ -15,14 +17,17 @@ function App() {
   };
 
   return (
-    <GameState>
-      <div style={containerStyle}>
-        <InfoPanel />
-        <Field />
-        <ControlPanel />
-      </div>
-    </GameState>
+    <ModalState>
+      <GameState>
+        <div style={containerStyle}>
+          <InfoPanel />
+
+          <Field />
+          <ControlPanel />
+        </div>
+      </GameState>
+    </ModalState>
   );
-}
+};
 
 export default App;

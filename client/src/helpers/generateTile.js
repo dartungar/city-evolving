@@ -32,6 +32,7 @@ const generateTile = (id, x, y) => {
     resources: terrain.resources,
     appeal: calculateTileAppeal(terrain.resources),
     population: 0,
+    fillSchema: null,
     development: 0,
     wealth: 0,
     desireToExpand: 0,

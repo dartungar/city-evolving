@@ -10,16 +10,22 @@ import {
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
   RESET_GAME_SCORE,
+  SET_TARGET_TILE,
+  CLEAR_TARGET_TILE,
+  CHOOSE_FIRST_TILE,
 } from "../types";
 import generateTile from "../../helpers/generateTile";
 import calculateTileResources from "../../helpers/calculateTile";
 import chooseAdjacentTileToPopulate from "../../helpers/populateTile";
 import calculateGameScore from "../../helpers/calculateGameScore";
+import chooseFillSchema from "../../helpers/tileFillDirectionTemplates";
 
 const GameState = (props) => {
   const initialState = {
     size: null,
     tiles: [],
+    isFirstTileChosen: false,
+    targetTile: null,
     turns: 0,
     score: { population: 0, development: 0 },
   };
@@ -99,7 +105,7 @@ const GameState = (props) => {
         const tileToPopulate = chooseAdjacentTileToPopulate(field, tile);
         console.log("choosen tile to populate:", tileToPopulate);
         if (tileToPopulate) {
-          populateTile(tileToPopulate);
+          populateTile(tile, tileToPopulate);
           tile.population = tile.population - 5;
           tile.desireToExpand = 0;
           updateTile(tile);
@@ -110,23 +116,31 @@ const GameState = (props) => {
   };
 
   // populate first tile
-  const populateFirstTile = (field) => {
-    console.log(field);
-    const habitableTiles = field.filter((tile) => tile.isWater === false);
-    const chosenTile =
-      habitableTiles[Math.floor(Math.random() * habitableTiles.length)];
-    populateTile(chosenTile);
+  const populateFirstTile = (tile) => {
+    populateTile(tile, tile);
+    dispatch({ type: CHOOSE_FIRST_TILE });
   };
 
   // populate chosen tile
-  const populateTile = (tile) => {
-    tile.population = 1;
-    updateTile(tile);
+  const populateTile = (originTile, tileToPopulate) => {
+    tileToPopulate.population = 1;
+    tileToPopulate.fillSchema = chooseFillSchema(originTile, tileToPopulate);
+    updateTile(tileToPopulate);
   };
 
   // update specific tile
   const updateTile = (newTile) => {
     dispatch({ type: UPDATE_TILE, payload: newTile });
+  };
+
+  // set target tile
+  const setTargetTile = (tile) => {
+    dispatch({ type: SET_TARGET_TILE, payload: tile });
+  };
+
+  // clear target tile
+  const clearTargetTile = () => {
+    dispatch({ type: CLEAR_TARGET_TILE });
   };
 
   return (
@@ -136,12 +150,16 @@ const GameState = (props) => {
         tiles: state.tiles,
         turns: state.turns,
         score: state.score,
+        targetTile: state.targetTile,
+        isFirstTileChosen: state.isFirstTileChosen,
         setSize,
         initField,
         populateFirstTile,
         incrementTurnCounter,
         resetTurnCounter,
         onChangeTurn,
+        setTargetTile,
+        clearTargetTile,
       }}
     >
       {props.children}
