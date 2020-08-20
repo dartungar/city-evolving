@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useState } from "react";
-import GameContext from "../../context/game/gameContext";
+import MapContext from "../../context/map/mapContext";
 import Tile from "../tile/Tile";
 import ModalContext from "../../context/modal/modalContext";
 import Modal from "../modals/Modal";
 
-const Field = () => {
-  const gameContext = useContext(GameContext);
-  const { size, setSize, tiles, initField, populateFirstTile } = gameContext;
+const Map = () => {
+  const mapContext = useContext(MapContext);
+  const { size, setSize, tiles, initMap } = mapContext;
   const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
 
   const modalContext = useContext(ModalContext);
@@ -21,7 +21,7 @@ const Field = () => {
 
     // if size is set and tiles not yet generated, generate tiles
     if (size !== null && tiles.length === 0) {
-      initField(size);
+      initMap(size);
     }
 
     // eslint-disable-next-line
@@ -33,15 +33,7 @@ const Field = () => {
     setIsFirstTilePopulated(false);
   }, []);
 
-  // if tiles are initialized and first tile still not populated, do it
-  // useEffect(() => {
-  //   if (tiles.length > 0 && isFirstTilePopulated === false) {
-  //     populateFirstTile(tiles);
-  //     setIsFirstTilePopulated(true);
-  //   }
-  // }, [tiles, isFirstTilePopulated, populateFirstTile]);
-
-  const fieldStyle = {
+  const mapContainerStyle = {
     display: "grid",
     width: "70vh",
     height: "70vh",
@@ -55,11 +47,11 @@ const Field = () => {
   };
 
   return (
-    <div style={fieldStyle}>
+    <div style={mapContainerStyle}>
       {isShown && <Modal />}
       {tiles && tiles.map((tile) => <Tile tile={tile} key={tile.id} />)}
     </div>
   );
 };
 
-export default Field;
+export default Map;

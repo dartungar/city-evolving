@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import SubTile from "./SubTile";
-import GameContext from "../../context/game/gameContext";
+import MapContext from "../../context/map/mapContext";
+
 import ModalContext from "../../context/modal/modalContext";
 
 const Tile = ({ tile }) => {
-  const gameContext = useContext(GameContext);
-  const { setTargetTile, isFirstTileChosen } = gameContext;
+  const mapContext = useContext(MapContext);
+  const { setTargetTile, isFirstTileChosen } = mapContext;
 
   const [subtiles, setSubtiles] = useState();
 

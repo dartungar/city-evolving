@@ -1,16 +1,20 @@
 import React, { useContext } from "react";
 import GameContext from "../../context/game/gameContext";
+import MapContext from "../../context/map/mapContext";
 import ModalContext from "../../context/modal/modalContext";
 
 const ConfirmSettlementModal = () => {
   const gameContext = useContext(GameContext);
+  const { updateGameScore, incrementTurnCounter } = gameContext;
+
+  const mapContext = useContext(MapContext);
   const {
+    tiles,
     targetTile,
     clearTargetTile,
     populateFirstTile,
-    onChangeTurn,
-    tiles,
-  } = gameContext;
+    recalculateMap,
+  } = mapContext;
 
   const modalContext = useContext(ModalContext);
   const { hideModal } = modalContext;
@@ -19,7 +23,9 @@ const ConfirmSettlementModal = () => {
     populateFirstTile(targetTile);
     hideModal();
     clearTargetTile();
-    onChangeTurn(tiles);
+    recalculateMap(tiles);
+    updateGameScore(tiles);
+    incrementTurnCounter();
   };
 
   const handleClickNo = () => {

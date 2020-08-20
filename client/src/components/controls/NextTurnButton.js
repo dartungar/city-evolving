@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import GameContext from "../../context/game/gameContext";
+import MapContext from "../../context/map/mapContext";
 
 const NextTurnButton = () => {
   const gameContext = useContext(GameContext);
-  const { onChangeTurn, tiles, incrementTurnCounter } = gameContext;
+  const { updateGameScore, incrementTurnCounter } = gameContext;
+
+  const mapContext = useContext(MapContext);
+  const { tiles, recalculateMap } = mapContext;
 
   const style = {
     fontSize: "3rem",
@@ -13,7 +17,8 @@ const NextTurnButton = () => {
   };
 
   const handleClick = () => {
-    onChangeTurn(tiles);
+    recalculateMap(tiles);
+    updateGameScore(tiles);
     incrementTurnCounter();
   };
 

@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import "./App.css";
 import GameState from "./context/game/GameState";
+import MapState from "./context/map/MapState";
 import ModalState from "./context/modal/ModalState";
 import InfoPanel from "./components/info/InfoPanel";
-import Field from "./components/field/Field";
+import Map from "./components/map/Map";
 import ControlPanel from "./components/controls/ControlPanel";
 
 const App = () => {
@@ -19,12 +20,14 @@ const App = () => {
   return (
     <ModalState>
       <GameState>
-        <div style={containerStyle}>
-          <InfoPanel />
+        <MapState>
+          <div style={containerStyle}>
+            <InfoPanel />
 
-          <Field />
-          <ControlPanel />
-        </div>
+            <Map />
+            <ControlPanel />
+          </div>
+        </MapState>
       </GameState>
     </ModalState>
   );
