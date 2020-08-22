@@ -11,7 +11,7 @@ import {
   CHOOSE_FIRST_TILE,
   CLEAR_FIRST_TILE,
 } from "../types";
-import generateTile from "../../helpers/generateTile";
+import generateMap from "../../helpers/generateMap";
 import calculateTileResources from "../../helpers/calculateTile";
 import chooseAdjacentTileToPopulate from "../../helpers/populateTile";
 import chooseFillSchema from "../../helpers/tileFillDirectionTemplates";
@@ -38,23 +38,14 @@ const MapState = (props) => {
 
   // initialize field: create tiles based on field size
   const initMap = (size) => {
-    const tiles = [];
-    let id = 0;
-    for (let y = 1; y <= size; y++) {
-      for (let x = 1; x <= size; x++) {
-        // TODO: функция initTile(x, y) с более сложной логикой генерации тайла
-        id++;
-        const tile = generateTile(id, x, y);
-        tiles.push(tile);
-      }
-    }
+    const tiles = generateMap(size, Math.random());
     setMap(tiles);
     dispatch({ type: CLEAR_FIRST_TILE });
   };
 
   // recalculate the whole field (tiles)
   const recalculateMap = (tiles) => {
-    const newMap = tiles.map((tile) => calculateTile(tiles, tile));
+    const newMap = tiles.map((tile) => tile.calculateChangesOnTurn());
     setMap(newMap);
   };
 
@@ -64,23 +55,23 @@ const MapState = (props) => {
   };
 
   // calculate tile changes during this turn
-  const calculateTile = (field, tile) => {
-    if (tile.population > 0) {
-      tile = calculateTileResources(field, tile);
-      // TODO: remove magic numbers
-      if (tile.desireToExpand > 50) {
-        const tileToPopulate = chooseAdjacentTileToPopulate(field, tile);
-        console.log("choosen tile to populate:", tileToPopulate);
-        if (tileToPopulate) {
-          populateTile(tile, tileToPopulate);
-          tile.population = tile.population - 5;
-          tile.desireToExpand = 0;
-          updateTile(tile);
-        } else console.log("no valid tiles to populate!");
-      }
-    }
-    return tile;
-  };
+  // const calculateTile = (field, tile) => {
+  //   if (tile.population > 0) {
+  //     tile = calculateTileResources(field, tile);
+  //     // TODO: remove magic numbers
+  //     if (tile.desireToExpand > 50) {
+  //       const tileToPopulate = chooseAdjacentTileToPopulate(field, tile);
+  //       console.log("choosen tile to populate:", tileToPopulate);
+  //       if (tileToPopulate) {
+  //         populateTile(tile, tileToPopulate);
+  //         tile.population = tile.population - 5;
+  //         tile.desireToExpand = 0;
+  //         updateTile(tile);
+  //       } else console.log("no valid tiles to populate!");
+  //     }
+  //   }
+  //   return tile;
+  // };
 
   // populate first tile
   const populateFirstTile = (tile) => {

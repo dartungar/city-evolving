@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/dartungar/city-evolving/issues"
   },
-  "homepage": "https://github.com/dartungar/city-evolving#readme"
+  "homepage": "https://github.com/dartungar/city-evolving#readme",
+  "dependencies": {
+    "noisejs": "^2.1.0"
+  }
 }

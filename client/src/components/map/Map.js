@@ -11,7 +11,7 @@ const Map = () => {
   useEffect(() => {
     // TODO: get rid of magic variable, replace with setting
     if (size === null) {
-      setSize(10);
+      setSize(40);
     }
 
     // if size is set and tiles not yet generated, generate tiles

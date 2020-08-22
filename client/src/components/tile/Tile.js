@@ -15,12 +15,12 @@ const Tile = ({ tile }) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    if (tile.fillSchema !== null && !subtiles) {
-      console.log("tile fill schema", tile.fillSchema);
-      setSubtiles(generateSubTiles(tile.fillSchema));
-    }
-  }, [tile.fillSchema]);
+  // useEffect(() => {
+  //   if (tile.fillSchema !== null && !subtiles) {
+  //     console.log("tile fill schema", tile.fillSchema);
+  //     //setSubtiles(generateSubTiles(tile.fillSchema));
+  //   }
+  // }, [tile.fillSchema]);
 
   const {
     terrain,
@@ -43,8 +43,28 @@ const Tile = ({ tile }) => {
     return terrainColors[terrain];
   };
 
+  const getElevationColor = (elevation) => {
+    if (elevation < 0.1) {
+      return "blue";
+    } else if (elevation < 0.4) {
+      return "lightgreen";
+    } else if (elevation < 0.6) {
+      return "green";
+    } else if (elevation < 0.7) {
+      return "khaki";
+    } else if (elevation < 0.8) {
+      return "darkkhaki";
+    } else if (elevation < 0.9) {
+      return "darkgray";
+    } else if (elevation < 0.95) {
+      return "dimgray";
+    } else return "white";
+  };
+
   const style = {
-    backgroundColor: getTerrainColor(terrain),
+    //backgroundColor: getTerrainColor(terrain),
+    backgroundColor: getElevationColor(tile.elevation),
+    //opacity: `${tile.elevation * 100}%`,
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gridTemplateRows: "repeat(3, 1fr)",
@@ -66,14 +86,14 @@ const Tile = ({ tile }) => {
   `;
 
   // TODO: больше вариантов, разные стороны
-  const generateSubTiles = (fillSchema) => {
-    const subtiles = [];
-    console.log("generating sub tiles with schema", fillSchema);
-    fillSchema.map((n) => {
-      subtiles.push(<SubTile tile={tile} number={n} key={`${tile.id}-${n}`} />);
-    });
-    return subtiles;
-  };
+  // const generateSubTiles = (fillSchema) => {
+  //   const subtiles = [];
+  //   console.log("generating sub tiles with schema", fillSchema);
+  //   fillSchema.map((n) => {
+  //     subtiles.push(<SubTile tile={tile} number={n} key={`${tile.id}-${n}`} />);
+  //   });
+  //   return subtiles;
+  // };
 
   const handleClick = () => {
     if (!isFirstTileChosen && tile.terrain !== "river") {
@@ -103,7 +123,7 @@ const Tile = ({ tile }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {tile.fillSchema !== null && generateSubTiles(tile.fillSchema)}
+      {/* {tile.fillSchema !== null && generateSubTiles(tile.fillSchema)} */}
     </div>
   );
 };
