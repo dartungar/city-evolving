@@ -13,7 +13,8 @@ const ScoreCounter = () => {
 
   return (
     <div style={style}>
-      Population: {population} Development: {development} Wealth: {wealth}
+      Population: {Math.ceil(population)} Development: {Math.ceil(development)}{" "}
+      Wealth: {Math.ceil(wealth)}
     </div>
   );
 };

@@ -50,16 +50,20 @@ const Tile = ({ tile }) => {
     gridTemplateColumns: "repeat(3, 1fr)",
     gridTemplateRows: "repeat(3, 1fr)",
     gridGap: "1px",
-    border: isHovered && "2px solid red",
   };
 
-  const title = `population: ${population}
-                development: ${development}
-                wealth: ${wealth}
-                food: ${resources.food}
-                production: ${resources.production}
-                gold: ${resources.gold}
-                desire to expand: ${desireToExpand}
+  const hoveredStyle = {
+    border: isHovered && "2px solid red",
+    cursor: "pointer",
+  };
+
+  const title = `population: ${Math.ceil(population)}
+                development: ${Math.ceil(development)}
+                wealth: ${Math.ceil(wealth)}
+                food: ${Math.ceil(resources.food)}
+                production: ${Math.ceil(resources.production)}
+                gold: ${Math.ceil(resources.gold)}
+                desire to expand: ${Math.ceil(desireToExpand)}
   `;
 
   // TODO: больше вариантов, разные стороны
@@ -73,13 +77,15 @@ const Tile = ({ tile }) => {
   };
 
   const handleClick = () => {
-    setTargetTile(tile);
-    showModal("confirmSettlement");
-    console.log("set target tile:", tile);
+    if (tile.terrain !== "river") {
+      setTargetTile(tile);
+      showModal("confirmSettlement");
+      console.log("set target tile:", tile);
+    }
   };
 
   const handleMouseEnter = () => {
-    if (!isFirstTileChosen) {
+    if (!isFirstTileChosen && tile.terrain !== "river") {
       setIsHovered(true);
     }
   };
@@ -92,7 +98,7 @@ const Tile = ({ tile }) => {
 
   return (
     <div
-      style={style}
+      style={{ ...style, ...(isHovered && hoveredStyle) }}
       title={title}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
