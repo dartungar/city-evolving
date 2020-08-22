@@ -4,6 +4,8 @@ import {
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
   RESET_GAME_SCORE,
+  SET_STATUS_TEXT,
+  CLEAR_STATUS_TEXT,
 } from "../types";
 
 const gameReducer = (state, action) => {
@@ -32,6 +34,16 @@ const gameReducer = (state, action) => {
       return {
         ...state,
         score: { population: 0, development: 0 },
+      };
+    case SET_STATUS_TEXT:
+      return {
+        ...state,
+        statusText: action.payload,
+      };
+    case CLEAR_STATUS_TEXT:
+      return {
+        ...state,
+        statusText: "",
       };
     default:
       return state;

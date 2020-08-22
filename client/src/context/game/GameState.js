@@ -7,19 +7,18 @@ import {
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
   RESET_GAME_SCORE,
+  SET_STATUS_TEXT,
+  CLEAR_STATUS_TEXT,
 } from "../types";
 import calculateGameScore from "../../helpers/calculateGameScore";
 
 const GameState = (props) => {
   const initialState = {
-    size: null,
-    tiles: [],
-    isFirstTileChosen: false,
     isGameStarted: false,
-    targetTile: null,
     turns: 0,
     maxTurns: 10, // TODO: make into setting
     score: { population: 0, development: 0 },
+    statusText: "  ",
   };
 
   const [state, dispatch] = useReducer(gameReducer, initialState);
@@ -54,6 +53,16 @@ const GameState = (props) => {
     dispatch({ type: RESET_GAME_SCORE });
   };
 
+  // set status text
+  const setStatusText = (text) => {
+    dispatch({ type: SET_STATUS_TEXT, payload: text });
+  };
+
+  // clear status text
+  const clearStatusText = (text) => {
+    dispatch({ type: CLEAR_STATUS_TEXT });
+  };
+
   return (
     <gameContext.Provider
       value={{
@@ -61,10 +70,13 @@ const GameState = (props) => {
         maxTurns: state.maxTurns,
         score: state.score,
         isGameStarted: state.isGameStarted,
+        statusText: state.statusText,
         startGame,
         incrementTurnCounter,
         resetTurnCounter,
         updateGameScore,
+        setStatusText,
+        clearStatusText,
       }}
     >
       {props.children}

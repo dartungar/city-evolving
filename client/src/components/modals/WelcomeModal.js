@@ -5,7 +5,7 @@ import ModalContext from "../../context/modal/modalContext";
 
 const WelcomeModal = () => {
   const gameContext = useContext(GameContext);
-  const { startGame } = gameContext;
+  const { startGame, setStatusText } = gameContext;
 
   const mapContext = useContext(MapContext);
   const { initMap } = mapContext;
@@ -15,6 +15,7 @@ const WelcomeModal = () => {
 
   const handleClickYes = () => {
     startGame();
+    setStatusText("Choose a place to settle!");
     hideModal();
   };
 

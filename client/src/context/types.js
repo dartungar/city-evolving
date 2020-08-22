@@ -1,10 +1,11 @@
 // game
 export const START_GAME = "START_GAME";
-//export const
 export const UPDATE_TURN_COUNTER = "UPDATE_TURN_COUNTER";
 export const RESET_TURN_COUNTER = "RESET_TURN_COUNTER";
 export const UPDATE_GAME_SCORE = "UPDATE_GAME_SCORE";
 export const RESET_GAME_SCORE = "RESET_GAME_SCORE";
+export const SET_STATUS_TEXT = "SET_STATUS_TEXT";
+export const CLEAR_STATUS_TEXT = "CLEAR_STATUS_TEXT";
 
 // map
 export const SET_SIZE = "SET_SIZE";

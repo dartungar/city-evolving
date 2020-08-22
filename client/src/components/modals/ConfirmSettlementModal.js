@@ -5,7 +5,11 @@ import ModalContext from "../../context/modal/modalContext";
 
 const ConfirmSettlementModal = () => {
   const gameContext = useContext(GameContext);
-  const { updateGameScore, incrementTurnCounter } = gameContext;
+  const {
+    updateGameScore,
+    incrementTurnCounter,
+    clearStatusText,
+  } = gameContext;
 
   const mapContext = useContext(MapContext);
   const {
@@ -23,6 +27,7 @@ const ConfirmSettlementModal = () => {
     populateFirstTile(targetTile);
     hideModal();
     clearTargetTile();
+    clearStatusText();
     recalculateMap(tiles);
     updateGameScore(tiles);
     incrementTurnCounter();
