@@ -8,7 +8,7 @@ const calculateGameScore = (field) => {
       totalScore.gold = totalScore.gold + tile.gold;
     }
   });
-  console.log(totalScore);
+  //console.log(totalScore);
   return totalScore;
 };
 

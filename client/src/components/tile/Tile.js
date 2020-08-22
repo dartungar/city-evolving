@@ -62,9 +62,9 @@ const Tile = ({ tile }) => {
   };
 
   const style = {
-    backgroundColor: "black",
-    //backgroundColor: getElevationColor(tile.elevation),
-    opacity: `${tile.elevation * 100}%`,
+    //backgroundColor: "black",
+    backgroundColor: getElevationColor(tile.elevation),
+    //opacity: `${tile.elevation * 100}%`,
   };
 
   const hoveredStyle = {
