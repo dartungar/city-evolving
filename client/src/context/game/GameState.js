@@ -16,7 +16,7 @@ const GameState = (props) => {
   const initialState = {
     isGameActive: false,
     turns: 0,
-    maxTurns: 10, // TODO: make into setting
+    maxTurns: 1000, // TODO: make into setting
     score: { population: 0, development: 0, wealth: 0 },
     statusText: "  ",
   };

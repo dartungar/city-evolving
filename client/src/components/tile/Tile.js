@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import SubTile from "./SubTile";
+import BuildingIcon from "./BuildingIcon";
 import MapContext from "../../context/map/mapContext";
 import ModalContext from "../../context/modal/modalContext";
 
@@ -45,11 +45,11 @@ const Tile = ({ tile }) => {
 
   const getElevationColor = (elevation) => {
     if (elevation < 0.1) {
-      return "blue";
+      return "dodgerblue";
     } else if (elevation < 0.4) {
       return "lightgreen";
     } else if (elevation < 0.6) {
-      return "green";
+      return "mediumseagreen";
     } else if (elevation < 0.7) {
       return "khaki";
     } else if (elevation < 0.8) {
@@ -62,13 +62,9 @@ const Tile = ({ tile }) => {
   };
 
   const style = {
-    //backgroundColor: getTerrainColor(terrain),
-    backgroundColor: getElevationColor(tile.elevation),
-    //opacity: `${tile.elevation * 100}%`,
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridTemplateRows: "repeat(3, 1fr)",
-    gridGap: "1px",
+    backgroundColor: "black",
+    //backgroundColor: getElevationColor(tile.elevation),
+    opacity: `${tile.elevation * 100}%`,
   };
 
   const hoveredStyle = {
@@ -85,18 +81,8 @@ const Tile = ({ tile }) => {
                 desire to expand: ${Math.ceil(desireToExpand)}
   `;
 
-  // TODO: больше вариантов, разные стороны
-  // const generateSubTiles = (fillSchema) => {
-  //   const subtiles = [];
-  //   console.log("generating sub tiles with schema", fillSchema);
-  //   fillSchema.map((n) => {
-  //     subtiles.push(<SubTile tile={tile} number={n} key={`${tile.id}-${n}`} />);
-  //   });
-  //   return subtiles;
-  // };
-
   const handleClick = () => {
-    if (!isFirstTileChosen && tile.terrain !== "river") {
+    if (!isFirstTileChosen && !tile.isWater) {
       setTargetTile(tile);
       showModal("confirmSettlement");
       console.log("set target tile:", tile);
@@ -104,7 +90,7 @@ const Tile = ({ tile }) => {
   };
 
   const handleMouseEnter = () => {
-    if (!isFirstTileChosen && tile.terrain !== "river") {
+    if (!isFirstTileChosen && !tile.isWater) {
       setIsHovered(true);
     }
   };
@@ -123,7 +109,7 @@ const Tile = ({ tile }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* {tile.fillSchema !== null && generateSubTiles(tile.fillSchema)} */}
+      <BuildingIcon developmentLevel={tile.developmentLevel} />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 const calculateGameScore = (field) => {
-  const totalScore = { population: 0, development: 0, wealth: 0 };
+  const totalScore = { population: 0, materials: 0, gold: 0 };
 
-  field.map((tile) => {
+  field.forEach((tile) => {
     if (tile.population > 0) {
       totalScore.population = totalScore.population + tile.population;
-      totalScore.development = totalScore.development + tile.development;
-      totalScore.wealth = totalScore.wealth + tile.wealth;
+      totalScore.materials = totalScore.materials + tile.materials;
+      totalScore.gold = totalScore.gold + tile.gold;
     }
   });
   console.log(totalScore);

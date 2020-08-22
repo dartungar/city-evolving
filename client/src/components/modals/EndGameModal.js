@@ -6,7 +6,7 @@ import ModalContext from "../../context/modal/modalContext";
 const WelcomeModal = () => {
   const gameContext = useContext(GameContext);
   const {
-    score: { population, development, wealth },
+    score: { population, materials, gold },
     restartGame,
     setStatusText,
   } = gameContext;
@@ -29,9 +29,8 @@ const WelcomeModal = () => {
       <p>Your city has lived through ages, and now it is time to let it go.</p>
       <p>Your score is: </p>
       <p>
-        Population: {Math.ceil(population)} Development:
-        {Math.ceil(development)}
-        Wealth: {Math.ceil(wealth)}
+        Population: {Math.ceil(population)} Materials: {Math.ceil(materials)}
+        Gold: {Math.ceil(gold)}
       </p>
       <button onClick={handleClickYes}>Restart Game</button>
     </div>

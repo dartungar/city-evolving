@@ -4,7 +4,7 @@ import GameContext from "../../context/game/gameContext";
 const ScoreCounter = () => {
   const gameContext = useContext(GameContext);
   const {
-    score: { population, development, wealth },
+    score: { population, materials, gold },
   } = gameContext;
 
   const style = {
@@ -13,8 +13,8 @@ const ScoreCounter = () => {
 
   return (
     <div style={style}>
-      Population: {Math.ceil(population)} Development: {Math.ceil(development)}{" "}
-      Wealth: {Math.ceil(wealth)}
+      Population: {Math.ceil(population)} Materials: {Math.ceil(materials)}
+      Gold: {Math.ceil(gold)}
     </div>
   );
 };

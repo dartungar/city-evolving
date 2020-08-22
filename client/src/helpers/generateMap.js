@@ -25,6 +25,7 @@ const generateMap = (size, seed) => {
   console.log("first stage:", tiles);
 
   // second stage: calculate moisture
+  tiles.forEach((tile) => tile.calculateMoisture());
 
   // third stage: calculate biomes based on elevation & moisture
 

@@ -45,8 +45,17 @@ const MapState = (props) => {
 
   // recalculate the whole field (tiles)
   const recalculateMap = (tiles) => {
-    const newMap = tiles.map((tile) => tile.calculateChangesOnTurn());
-    setMap(newMap);
+    tiles.forEach((tile) => {
+      tile.calculateChangesOnTurn();
+      tile.decideIfUpgrade();
+      if (tile.decideIfSettle()) {
+        const chosenTile = tile.chooseTileToPopulate(tiles, tile);
+        if (chosenTile) {
+          console.log("we should populate some new tile!", chosenTile);
+          populateTile(chosenTile);
+        } else console.log("no tiles to populate!");
+      }
+    });
   };
 
   // clear field
@@ -80,16 +89,14 @@ const MapState = (props) => {
   };
 
   // populate chosen tile
-  const populateTile = (originTile, tileToPopulate) => {
-    tileToPopulate.population = 1;
-    tileToPopulate.fillSchema = chooseFillSchema(originTile, tileToPopulate);
-    updateTile(tileToPopulate);
+  const populateTile = (tile) => {
+    tile.population = 1;
   };
 
   // update specific tile
-  const updateTile = (newTile) => {
-    dispatch({ type: UPDATE_TILE, payload: newTile });
-  };
+  // const updateTile = (newTile) => {
+  //   dispatch({ type: UPDATE_TILE, payload: newTile });
+  // };
 
   // set target tile
   const setTargetTile = (tile) => {
@@ -110,7 +117,7 @@ const MapState = (props) => {
         isFirstTileChosen: state.isFirstTileChosen,
         setSize,
         initMap,
-        populateFirstTile,
+        populateTile,
         setTargetTile,
         clearTargetTile,
         recalculateMap,
