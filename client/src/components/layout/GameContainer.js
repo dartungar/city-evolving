@@ -11,13 +11,20 @@ const GameContainer = () => {
   const { isShown, showModal } = modalContext;
 
   const gameContext = useContext(GameContext);
-  const { isGameStarted, turns, maxTurns } = gameContext;
+  const { isGameStarted, turns, maxTurns, endGame } = gameContext;
 
   useEffect(() => {
     if (!isGameStarted) {
       showModal("welcome");
     }
   }, []);
+
+  useEffect(() => {
+    if (turns > maxTurns) {
+      showModal("endGame");
+      endGame();
+    }
+  }, [turns]);
 
   const containerStyle = {
     height: "100vh",

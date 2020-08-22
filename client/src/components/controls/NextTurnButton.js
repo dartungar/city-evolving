@@ -1,16 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import GameContext from "../../context/game/gameContext";
 import MapContext from "../../context/map/mapContext";
 
 const NextTurnButton = () => {
   const gameContext = useContext(GameContext);
-  const { updateGameScore, incrementTurnCounter } = gameContext;
+  const { updateGameScore, incrementTurnCounter, isGameActive } = gameContext;
 
   const mapContext = useContext(MapContext);
   const { tiles, recalculateMap, isFirstTileChosen } = mapContext;
 
-  // update game state for next turn
   const handleClick = () => {
+    nextTurn();
+  };
+
+  // update game state for next turn
+  const nextTurn = () => {
     recalculateMap(tiles);
     updateGameScore(tiles);
     incrementTurnCounter();
@@ -18,7 +22,7 @@ const NextTurnButton = () => {
 
   const buttonStyle = {
     fontSize: "3rem",
-    color: isFirstTileChosen ? "royalblue" : "grey",
+    color: isGameActive ? "royalblue" : "grey",
     cursor: "pointer",
     margin: "1rem",
   };
@@ -27,7 +31,7 @@ const NextTurnButton = () => {
     <div>
       <button
         onClick={handleClick}
-        disabled={!isFirstTileChosen}
+        disabled={!isGameActive}
         style={buttonStyle}
       >
         <i className="fas fa-arrow-alt-circle-right"></i>

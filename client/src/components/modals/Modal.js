@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ModalContext from "../../context/modal/modalContext";
 import ConfirmSettlementModal from "./ConfirmSettlementModal";
 import WelcomeModal from "./WelcomeModal";
+import EndGameModal from "./EndGameModal";
 
 const Modal = (props) => {
   const modalContext = useContext(ModalContext);
@@ -19,6 +20,7 @@ const Modal = (props) => {
     opacity: "90%",
     border: "1px black solid",
     textAlign: "center",
+    padding: "1rem",
   };
 
   const buttonStyle = {
@@ -34,7 +36,7 @@ const Modal = (props) => {
     } else if (type === "welcome") {
       return <WelcomeModal />;
     } else if (type === "endGame") {
-      return; // TODO
+      return <EndGameModal />;
     }
   };
 

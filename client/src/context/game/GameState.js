@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import gameContext from "./gameContext";
 import gameReducer from "./gameReducer";
 import {
-  START_GAME,
+  SET_IS_GAME_ACTIVE,
   UPDATE_TURN_COUNTER,
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
@@ -14,10 +14,10 @@ import calculateGameScore from "../../helpers/calculateGameScore";
 
 const GameState = (props) => {
   const initialState = {
-    isGameStarted: false,
+    isGameActive: false,
     turns: 0,
     maxTurns: 10, // TODO: make into setting
-    score: { population: 0, development: 0 },
+    score: { population: 0, development: 0, wealth: 0 },
     statusText: "  ",
   };
 
@@ -25,7 +25,18 @@ const GameState = (props) => {
 
   // start game
   const startGame = () => {
-    dispatch({ type: START_GAME });
+    dispatch({ type: SET_IS_GAME_ACTIVE, payload: true });
+  };
+
+  const endGame = () => {
+    dispatch({ type: SET_IS_GAME_ACTIVE, payload: false });
+  };
+
+  const restartGame = () => {
+    dispatch({ type: SET_IS_GAME_ACTIVE, payload: true });
+    dispatch({ type: RESET_TURN_COUNTER });
+    dispatch({ type: RESET_GAME_SCORE });
+    dispatch({ type: CLEAR_STATUS_TEXT });
   };
 
   // on every turn - TODO?
@@ -69,11 +80,12 @@ const GameState = (props) => {
         turns: state.turns,
         maxTurns: state.maxTurns,
         score: state.score,
-        isGameStarted: state.isGameStarted,
+        isGameActive: state.isGameActive,
         statusText: state.statusText,
         startGame,
+        endGame,
+        restartGame,
         incrementTurnCounter,
-        resetTurnCounter,
         updateGameScore,
         setStatusText,
         clearStatusText,

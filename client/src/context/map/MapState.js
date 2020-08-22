@@ -9,6 +9,7 @@ import {
   SET_TARGET_TILE,
   CLEAR_TARGET_TILE,
   CHOOSE_FIRST_TILE,
+  CLEAR_FIRST_TILE,
 } from "../types";
 import generateTile from "../../helpers/generateTile";
 import calculateTileResources from "../../helpers/calculateTile";
@@ -48,6 +49,7 @@ const MapState = (props) => {
       }
     }
     setMap(tiles);
+    dispatch({ type: CLEAR_FIRST_TILE });
   };
 
   // recalculate the whole field (tiles)

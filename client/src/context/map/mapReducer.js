@@ -6,6 +6,7 @@ import {
   SET_TARGET_TILE,
   CLEAR_TARGET_TILE,
   CHOOSE_FIRST_TILE,
+  CLEAR_FIRST_TILE,
 } from "../types";
 
 const mapReducer = (state, action) => {
@@ -42,6 +43,11 @@ const mapReducer = (state, action) => {
       return {
         ...state,
         isFirstTileChosen: true,
+      };
+    case CLEAR_FIRST_TILE:
+      return {
+        ...state,
+        isFirstTileChosen: false,
       };
     default:
       return state;
