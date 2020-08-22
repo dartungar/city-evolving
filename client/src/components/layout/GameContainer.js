@@ -1,0 +1,41 @@
+import React, { useContext, useEffect } from "react";
+import InfoPanel from "../info/InfoPanel";
+import Map from "../map/Map";
+import ControlPanel from "../controls/ControlPanel";
+import GameContext from "../../context/game/gameContext";
+import Modal from "../modals/Modal";
+import ModalContext from "../../context/modal/modalContext";
+
+const GameContainer = () => {
+  const modalContext = useContext(ModalContext);
+  const { isShown, showModal } = modalContext;
+
+  const gameContext = useContext(GameContext);
+  const { isGameStarted, turns, maxTurns } = gameContext;
+
+  useEffect(() => {
+    if (!isGameStarted) {
+      showModal("welcome");
+    }
+  }, []);
+
+  const containerStyle = {
+    height: "100vh",
+    width: "100vw",
+    display: "flex",
+    flexFlow: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <InfoPanel />
+      {isShown && <Modal />}
+      <Map />
+      <ControlPanel />
+    </div>
+  );
+};
+
+export default GameContainer;

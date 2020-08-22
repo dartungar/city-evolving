@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import SubTile from "./SubTile";
 import MapContext from "../../context/map/mapContext";
-
 import ModalContext from "../../context/modal/modalContext";
 
 const Tile = ({ tile }) => {
@@ -77,7 +76,7 @@ const Tile = ({ tile }) => {
   };
 
   const handleClick = () => {
-    if (tile.terrain !== "river") {
+    if (!isFirstTileChosen && tile.terrain !== "river") {
       setTargetTile(tile);
       showModal("confirmSettlement");
       console.log("set target tile:", tile);

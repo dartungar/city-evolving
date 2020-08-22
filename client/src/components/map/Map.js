@@ -1,16 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
 import MapContext from "../../context/map/mapContext";
 import Tile from "../tile/Tile";
-import ModalContext from "../../context/modal/modalContext";
-import Modal from "../modals/Modal";
 
 const Map = () => {
   const mapContext = useContext(MapContext);
   const { size, setSize, tiles, initMap } = mapContext;
   const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
-
-  const modalContext = useContext(ModalContext);
-  const { isShown } = modalContext;
 
   // if
   useEffect(() => {
@@ -28,7 +23,6 @@ const Map = () => {
   }, [size, tiles]);
 
   // on page load, create conditions to populate the first tile
-  // TODO: choose first tile manually
   useEffect(() => {
     setIsFirstTilePopulated(false);
   }, []);
@@ -40,15 +34,12 @@ const Map = () => {
     gridTemplateRows: `repeat(${size}, 1fr)`,
     gridTemplateColumns: `repeat(${size}, 1fr)`,
     gridGap: "1px",
-    //justifyContent: "center",
-    //alignContent: "center",
     padding: "1px",
     border: "1rem solid royalblue",
   };
 
   return (
     <div style={mapContainerStyle}>
-      {isShown && <Modal />}
       {tiles && tiles.map((tile) => <Tile tile={tile} key={tile.id} />)}
     </div>
   );

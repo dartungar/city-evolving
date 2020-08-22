@@ -2,35 +2,35 @@ import React, { useReducer } from "react";
 import gameContext from "./gameContext";
 import gameReducer from "./gameReducer";
 import {
-  SET_SIZE,
-  SET_FIELD,
-  CLEAR_FIELD,
-  UPDATE_TILE,
+  START_GAME,
   UPDATE_TURN_COUNTER,
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
   RESET_GAME_SCORE,
-  SET_TARGET_TILE,
-  CLEAR_TARGET_TILE,
-  CHOOSE_FIRST_TILE,
 } from "../types";
-import generateTile from "../../helpers/generateTile";
-import calculateTileResources from "../../helpers/calculateTile";
-import chooseAdjacentTileToPopulate from "../../helpers/populateTile";
 import calculateGameScore from "../../helpers/calculateGameScore";
-import chooseFillSchema from "../../helpers/tileFillDirectionTemplates";
 
 const GameState = (props) => {
   const initialState = {
     size: null,
     tiles: [],
     isFirstTileChosen: false,
+    isGameStarted: false,
     targetTile: null,
     turns: 0,
+    maxTurns: 10, // TODO: make into setting
     score: { population: 0, development: 0 },
   };
 
   const [state, dispatch] = useReducer(gameReducer, initialState);
+
+  // start game
+  const startGame = () => {
+    dispatch({ type: START_GAME });
+  };
+
+  // on every turn - TODO?
+  const nextTurn = () => {};
 
   // increment turn counter
   const incrementTurnCounter = () => {
@@ -58,7 +58,10 @@ const GameState = (props) => {
     <gameContext.Provider
       value={{
         turns: state.turns,
+        maxTurns: state.maxTurns,
         score: state.score,
+        isGameStarted: state.isGameStarted,
+        startGame,
         incrementTurnCounter,
         resetTurnCounter,
         updateGameScore,

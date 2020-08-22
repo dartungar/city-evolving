@@ -1,4 +1,6 @@
 // game
+export const START_GAME = "START_GAME";
+//export const
 export const UPDATE_TURN_COUNTER = "UPDATE_TURN_COUNTER";
 export const RESET_TURN_COUNTER = "RESET_TURN_COUNTER";
 export const UPDATE_GAME_SCORE = "UPDATE_GAME_SCORE";

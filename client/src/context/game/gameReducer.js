@@ -1,4 +1,5 @@
 import {
+  START_GAME,
   UPDATE_TURN_COUNTER,
   RESET_TURN_COUNTER,
   UPDATE_GAME_SCORE,
@@ -7,6 +8,11 @@ import {
 
 const gameReducer = (state, action) => {
   switch (action.type) {
+    case START_GAME:
+      return {
+        ...state,
+        isGameStarted: true,
+      };
     case UPDATE_TURN_COUNTER:
       return {
         ...state,

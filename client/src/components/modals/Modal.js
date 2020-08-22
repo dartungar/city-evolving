@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import ModalContext from "../../context/modal/modalContext";
 import ConfirmSettlementModal from "./ConfirmSettlementModal";
+import WelcomeModal from "./WelcomeModal";
 
 const Modal = (props) => {
   const modalContext = useContext(ModalContext);
@@ -30,6 +31,10 @@ const Modal = (props) => {
   const getModalByType = () => {
     if (type === "confirmSettlement") {
       return <ConfirmSettlementModal />;
+    } else if (type === "welcome") {
+      return <WelcomeModal />;
+    } else if (type === "endGame") {
+      return; // TODO
     }
   };
 
