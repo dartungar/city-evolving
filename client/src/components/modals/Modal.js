@@ -10,7 +10,7 @@ const Modal = (props) => {
   const { isShown, type } = modalContext;
 
   const style = {
-    zIndex: "200",
+    zIndex: "500",
     position: "absolute",
     backgroundColor: "white",
     width: "40vw",

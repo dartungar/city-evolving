@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import InfoPanel from "../info/InfoPanel";
-import Map from "../map/Map";
+import CanvasMap from "../map/CanvasMap";
 import ControlPanel from "../controls/ControlPanel";
 import GameContext from "../../context/game/gameContext";
 import Modal from "../modals/Modal";
@@ -39,7 +39,7 @@ const GameContainer = () => {
     <div style={containerStyle}>
       <InfoPanel />
       {isShown && <Modal />}
-      <Map />
+      <CanvasMap />
       <ControlPanel />
     </div>
   );

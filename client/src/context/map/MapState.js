@@ -18,7 +18,8 @@ import chooseFillSchema from "../../helpers/tileFillDirectionTemplates";
 
 const MapState = (props) => {
   const initialState = {
-    size: null,
+    mapSize: 50,
+    tileSize: 16,
     tiles: [],
     isFirstTileChosen: false,
     targetTile: null,
@@ -27,7 +28,7 @@ const MapState = (props) => {
   const [state, dispatch] = useReducer(mapReducer, initialState);
 
   // set size
-  const setSize = (size) => {
+  const setMapSize = (size) => {
     dispatch({ type: SET_SIZE, payload: size });
   };
 
@@ -111,11 +112,12 @@ const MapState = (props) => {
   return (
     <mapContext.Provider
       value={{
-        size: state.size,
+        mapSize: state.mapSize,
+        tileSize: state.tileSize,
         tiles: state.tiles,
         targetTile: state.targetTile,
         isFirstTileChosen: state.isFirstTileChosen,
-        setSize,
+        setMapSize,
         initMap,
         populateTile,
         setTargetTile,
