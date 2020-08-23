@@ -12,9 +12,6 @@ import {
   CLEAR_FIRST_TILE,
 } from "../types";
 import generateMap from "../../helpers/generateMap";
-import calculateTileResources from "../../helpers/calculateTile";
-import chooseAdjacentTileToPopulate from "../../helpers/populateTile";
-import chooseFillSchema from "../../helpers/tileFillDirectionTemplates";
 
 const MapState = (props) => {
   const initialState = {

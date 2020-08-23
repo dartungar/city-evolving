@@ -1,16 +1,24 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import MapContext from "../../context/map/mapContext";
-import CanvasTile from "../tile/CanvasTile";
+import GameContext from "../../context/game/gameContext";
+import ModalContext from "../../context/modal/modalContext";
 
-const TileSelectionLayer = () => {
+const TileSelectionLayer = ({ sizeInPx }) => {
   const mapContext = useContext(MapContext);
-  const { mapSize, tileSize, setMapSize, tiles, initMap } = mapContext;
+  const { mapSize, tileSize, tiles, setTargetTile } = mapContext;
+
+  const gameContext = useContext(GameContext);
+  const { isGameActive } = gameContext;
+
+  const modalContext = useContext(ModalContext);
+  const { showModal } = modalContext;
+
   const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
-  const [sizeInPx, setSizeInPx] = useState();
   const canvasRef = useRef(null);
 
+  // on page load, create conditions to populate the first tile
   useEffect(() => {
-    setSizeInPx(mapSize * tileSize);
+    setIsFirstTilePopulated(false);
   }, []);
 
   // get mouse coordinates inside canvas
@@ -45,7 +53,7 @@ const TileSelectionLayer = () => {
     return foundTile;
   };
 
-  const getTileByMousePosition = (event) => {
+  const getTileByMouseEvent = (event) => {
     const mousePosition = getMouseCoordinatesInsideCanvas(event);
     const tileCoordinates = getTileCoordinatesFromMousePosition(
       tileSize,
@@ -59,16 +67,18 @@ const TileSelectionLayer = () => {
     //console.log(tile.id);
   };
 
-  // draw 'border' for tile: a bigger tile on which we will draw original tile again
+  // draw border for a tile
   const drawTileBorder = (context, tileSize, tile) => {
-    // draw a bigger tile which will act as a border
-    context.fillStyle = "red";
-    context.fillRect(
+    context.beginPath();
+    context.lineWidth = 1;
+    context.strokeStyle = "red";
+    context.rect(
       tile.coordinates.x * tileSize - 1,
       tile.coordinates.y * tileSize - 1,
       tileSize + 2,
       tileSize + 2
     );
+    context.stroke();
   };
 
   const drawTileBorderOnMouseMove = (event) => {
@@ -77,9 +87,23 @@ const TileSelectionLayer = () => {
 
     context.clearRect(0, 0, sizeInPx, sizeInPx);
 
-    const tile = getTileByMousePosition(event);
-    console.log(tile.id);
+    const tile = getTileByMouseEvent(event);
     drawTileBorder(context, tileSize, tile);
+  };
+
+  const handleOnMouseMove = (event) => {
+    if (!isFirstTilePopulated && isGameActive) {
+      drawTileBorderOnMouseMove(event);
+    }
+  };
+
+  const handleClick = (event) => {
+    if (!isFirstTilePopulated) {
+      const tile = getTileByMouseEvent(event);
+      setTargetTile(tile);
+      showModal("confirmSettlement");
+      console.log("set target tile:", tile);
+    }
   };
 
   const tileBorderLayerStyle = {
@@ -92,7 +116,8 @@ const TileSelectionLayer = () => {
       ref={canvasRef}
       width={`${sizeInPx}px`}
       height={`${sizeInPx}px`}
-      onMouseMove={drawTileBorderOnMouseMove}
+      onMouseMove={handleOnMouseMove}
+      onClick={handleClick}
       style={tileBorderLayerStyle}
     />
   );

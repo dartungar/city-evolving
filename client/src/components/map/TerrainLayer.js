@@ -1,8 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import MapContext from "../../context/map/mapContext";
-import CanvasTile from "../tile/CanvasTile";
 
-const TerrainLayer = () => {
+const TerrainLayer = ({ sizeInPx }) => {
   const mapContext = useContext(MapContext);
   const { mapSize, tileSize, setMapSize, tiles, initMap } = mapContext;
   const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
@@ -33,18 +32,20 @@ const TerrainLayer = () => {
   };
 
   const getElevationColor = (elevation) => {
-    if (elevation < 0.05) {
-      return "blue";
-    } else if (elevation < 0.1) {
+    if (elevation < 0.1) {
       return "dodgerblue";
+    } else if (elevation < 0.15) {
+      return "aquamarine";
     } else if (elevation < 0.4) {
       return "lightgreen";
-    } else if (elevation < 0.6) {
+    } else if (elevation < 0.5) {
       return "mediumseagreen";
-    } else if (elevation < 0.7) {
+    } else if (elevation < 0.6) {
       return "khaki";
-    } else if (elevation < 0.8) {
+    } else if (elevation < 0.7) {
       return "darkkhaki";
+    } else if (elevation < 0.8) {
+      return "peru";
     } else if (elevation < 0.85) {
       return "darkgray";
     } else if (elevation < 0.9) {
@@ -62,8 +63,8 @@ const TerrainLayer = () => {
   return (
     <canvas
       ref={canvasRef}
-      width={`${mapSize * tileSize}px`}
-      height={`${mapSize * tileSize}px`}
+      width={`${sizeInPx}px`}
+      height={`${sizeInPx}px`}
       style={terrainLayerStyle}
     />
   );

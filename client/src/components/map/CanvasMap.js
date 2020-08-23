@@ -6,15 +6,16 @@ import TileSelectionLayer from "./TileSelectionLayer";
 const CanvasMap = () => {
   const mapContext = useContext(MapContext);
   const { mapSize, tileSize, setMapSize, tiles, initMap } = mapContext;
+
   const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
+  const [sizeInPx, setSizeInPx] = useState();
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    // TODO: get rid of magic variable, replace with setting chosen on game start
-    if (mapSize === null) {
-      setMapSize(50);
-    }
+    setSizeInPx(mapSize * tileSize);
+  }, []);
 
+  useEffect(() => {
     // if size is set and tiles not yet generated, generate tiles
     if (mapSize !== null && tiles.length === 0) {
       initMap(mapSize);
@@ -23,26 +24,21 @@ const CanvasMap = () => {
     // eslint-disable-next-line
   }, [mapSize, tiles]);
 
-  // on page load, create conditions to populate the first tile
-  useEffect(() => {
-    setIsFirstTilePopulated(false);
-  }, []);
-
   const mapContainerStyle = {
-    position: "relative",
+    //position: "absolute",
     zIndex: "0",
-    padding: "1px",
+    //padding: "1px",
     border: "1rem solid royalblue",
   };
 
   return (
     <div
       style={mapContainerStyle}
-      width={`${mapSize * tileSize}px`}
-      height={`${mapSize * tileSize}px`}
+      width={`${sizeInPx}px`}
+      height={`${sizeInPx}px`}
     >
-      <TerrainLayer />
-      <TileSelectionLayer />
+      <TerrainLayer sizeInPx={sizeInPx} />
+      <TileSelectionLayer sizeInPx={sizeInPx} />
     </div>
   );
 };

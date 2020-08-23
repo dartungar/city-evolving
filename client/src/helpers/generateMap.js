@@ -24,15 +24,21 @@ const generateMap = (size, seed) => {
   }
   console.log("first stage:", tiles);
 
-  // second stage: calculate moisture
+  // second stage: add random minor erosion (up to 10% of tile's height)
+  tiles.forEach((tile) => {
+    tile.elevation -= Math.random() * (tile.elevation / 25);
+    console.log("eroded");
+  });
+
+  // third stage: calculate moisture
   tiles.forEach((tile) => tile.calculateMoisture());
 
-  // third stage: calculate biomes based on elevation & moisture
+  // fourth stage: calculate biomes based on elevation & moisture
 
-  // fourth stage: calculate resources based on biome
+  // fifth stage: calculate resources based on biome
   tiles.forEach((tile) => tile.calculateResources()); // or is forEach in-place?
 
-  console.log("fourth stage:", tiles);
+  console.log("fifth stage:", tiles);
   return tiles;
 };
 
