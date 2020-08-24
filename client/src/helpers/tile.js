@@ -10,6 +10,7 @@ class Tile {
     this.appeal = null;
     this.moisture = null; // todo
     this.isWater = null;
+    this.isRiver = null;
     this.biome = null; // todo
     this.population = 0;
     this.materials = 0;
@@ -17,9 +18,15 @@ class Tile {
     this.developmentLevel = 0;
   }
 
+  setWaterToTrue = function () {
+    this.isWater = true;
+  };
+
   calculateMoisture = function () {
     // todo
-    this.isWater = this.elevation < 0.1 ? true : false;
+    if (this.isWater === false) {
+      this.isWater = this.elevation < 0.1 && true;
+    }
   };
 
   calculateResources = function () {

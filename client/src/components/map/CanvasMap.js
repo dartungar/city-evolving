@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from "react";
 import MapContext from "../../context/map/mapContext";
 import TerrainLayer from "./TerrainLayer";
 import TileSelectionLayer from "./TileSelectionLayer";
+import BuildingsLayer from "./BuildingsLayer";
 
 const CanvasMap = () => {
   const mapContext = useContext(MapContext);
@@ -25,20 +26,19 @@ const CanvasMap = () => {
   }, [mapSize, tiles]);
 
   const mapContainerStyle = {
-    //position: "absolute",
+    position: "relative",
     zIndex: "0",
     //padding: "1px",
     border: "1rem solid royalblue",
+    width: `${sizeInPx}px`,
+    height: `${sizeInPx}px`,
   };
 
   return (
-    <div
-      style={mapContainerStyle}
-      width={`${sizeInPx}px`}
-      height={`${sizeInPx}px`}
-    >
+    <div style={mapContainerStyle}>
       <TerrainLayer sizeInPx={sizeInPx} />
       <TileSelectionLayer sizeInPx={sizeInPx} />
+      <BuildingsLayer sizeInPx={sizeInPx} />
     </div>
   );
 };

@@ -14,13 +14,13 @@ const TerrainLayer = ({ sizeInPx }) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     if (mapSize !== null && tiles.length > 0) {
-      tiles.forEach((tile) => drawTile(context, 16, tile));
+      tiles.forEach((tile) => drawTerrainTile(context, 16, tile));
     }
   }, [tiles]);
 
-  const drawTile = (context, tileSize, tile) => {
+  const drawTerrainTile = (context, tileSize, tile) => {
     //console.log("drawing tiles for tile", tile);
-    context.fillStyle = getElevationColor(tile.elevation);
+    context.fillStyle = getElevationColor(tile);
     //console.log(context.fillStyle);
     context.fillRect(
       tile.coordinates.x * tileSize,
@@ -31,18 +31,23 @@ const TerrainLayer = ({ sizeInPx }) => {
     //console.log("filled tile:", tile);
   };
 
-  const getElevationColor = (elevation) => {
-    if (elevation < 0.1) {
+  const getElevationColor = (tile) => {
+    const { elevation, isWater, isRiver } = tile;
+    if (isRiver === true) {
+      return "lightskyblue";
+    }
+
+    if (elevation < 0.1 || isWater === true) {
       return "dodgerblue";
     } else if (elevation < 0.15) {
-      return "aquamarine";
+      return "honeydew";
     } else if (elevation < 0.4) {
       return "lightgreen";
-    } else if (elevation < 0.5) {
-      return "mediumseagreen";
     } else if (elevation < 0.6) {
-      return "khaki";
+      return "mediumseagreen";
     } else if (elevation < 0.7) {
+      return "khaki";
+    } else if (elevation < 0.75) {
       return "darkkhaki";
     } else if (elevation < 0.8) {
       return "peru";

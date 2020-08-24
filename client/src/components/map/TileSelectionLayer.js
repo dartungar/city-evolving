@@ -107,7 +107,7 @@ const TileSelectionLayer = ({ sizeInPx }) => {
   };
 
   const tileBorderLayerStyle = {
-    position: "relative",
+    position: "absolute",
     zIndex: "200",
   };
 
