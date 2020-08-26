@@ -3,8 +3,7 @@ import MapContext from "../../context/map/mapContext";
 
 const TerrainLayer = ({ sizeInPx }) => {
   const mapContext = useContext(MapContext);
-  const { mapSize, tileSize, setMapSize, tiles, initMap } = mapContext;
-  const [isFirstTilePopulated, setIsFirstTilePopulated] = useState();
+  const { mapSize, tileSize, tiles } = mapContext;
   const canvasRef = useRef(null);
 
   // draw tiles after map is initialized
@@ -14,7 +13,7 @@ const TerrainLayer = ({ sizeInPx }) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     if (mapSize !== null && tiles.length > 0) {
-      tiles.forEach((tile) => drawTerrainTile(context, 16, tile));
+      tiles.forEach((tile) => drawTerrainTile(context, tileSize, tile));
     }
   }, [tiles]);
 

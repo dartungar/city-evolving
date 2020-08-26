@@ -9,8 +9,8 @@ class Tile {
     this.resources = null; // todo
     this.appeal = null;
     this.moisture = null; // todo
-    this.isWater = null;
-    this.isRiver = null;
+    this.isWater = false;
+    this.isRiver = false;
     this.biome = null; // todo
     this.population = 0;
     this.materials = 0;

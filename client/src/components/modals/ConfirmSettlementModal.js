@@ -16,7 +16,7 @@ const ConfirmSettlementModal = () => {
     tiles,
     targetTile,
     clearTargetTile,
-    populateTile,
+    populateFirstTile,
     recalculateMap,
   } = mapContext;
 
@@ -24,7 +24,7 @@ const ConfirmSettlementModal = () => {
   const { hideModal } = modalContext;
 
   const handleClickYes = () => {
-    populateTile(targetTile);
+    populateFirstTile(targetTile);
     hideModal();
     clearTargetTile();
     clearStatusText();

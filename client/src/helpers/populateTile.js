@@ -28,13 +28,17 @@ const chooseAdjacentTileToPopulate = (map, originTile) => {
   const bestTiles = adjacentTiles.filter(
     (tile) => tile.appeal === maximumAppeal
   );
-  // return first tile with best value
-  console.log(
-    "the best tile distance:",
-    bestTiles[0].distanceFromOrigin,
-    bestTiles[0].appeal
-  );
-  return bestTiles[0];
+  // TODO: handle if not found best tile
+
+  if (bestTiles.length > 0) {
+    // return first tile with best value
+    console.log(
+      "the best tile distance:",
+      bestTiles[0].distanceFromOrigin,
+      bestTiles[0].appeal
+    );
+    return bestTiles[0];
+  } else console.log("Best tile not found! ", bestTiles);
 };
 
 export default chooseAdjacentTileToPopulate;

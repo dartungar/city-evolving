@@ -15,7 +15,7 @@ import generateMap from "../../helpers/generateMap";
 
 const MapState = (props) => {
   const initialState = {
-    mapSize: 50,
+    mapSize: 20,
     tileSize: 16,
     tiles: [],
     isFirstTileChosen: false,
@@ -117,6 +117,7 @@ const MapState = (props) => {
         setMapSize,
         initMap,
         populateTile,
+        populateFirstTile,
         setTargetTile,
         clearTargetTile,
         recalculateMap,

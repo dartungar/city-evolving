@@ -5,7 +5,13 @@ import ModalContext from "../../context/modal/modalContext";
 
 const TileSelectionLayer = ({ sizeInPx }) => {
   const mapContext = useContext(MapContext);
-  const { mapSize, tileSize, tiles, setTargetTile } = mapContext;
+  const {
+    mapSize,
+    tileSize,
+    tiles,
+    setTargetTile,
+    isFirstTileChosen,
+  } = mapContext;
 
   const gameContext = useContext(GameContext);
   const { isGameActive } = gameContext;
@@ -20,6 +26,13 @@ const TileSelectionLayer = ({ sizeInPx }) => {
   useEffect(() => {
     setIsFirstTilePopulated(false);
   }, []);
+
+  useEffect(() => {
+    if (isFirstTileChosen === true) {
+      setIsFirstTilePopulated(true);
+      clearAllBorders();
+    }
+  }, [isFirstTileChosen]);
 
   // get mouse coordinates inside canvas
   const getMouseCoordinatesInsideCanvas = (event) => {
@@ -81,6 +94,13 @@ const TileSelectionLayer = ({ sizeInPx }) => {
     context.stroke();
   };
 
+  const clearAllBorders = () => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    context.clearRect(0, 0, sizeInPx, sizeInPx);
+  };
+
   const drawTileBorderOnMouseMove = (event) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
@@ -108,7 +128,7 @@ const TileSelectionLayer = ({ sizeInPx }) => {
 
   const tileBorderLayerStyle = {
     position: "absolute",
-    zIndex: "200",
+    zIndex: "300",
   };
 
   return (
