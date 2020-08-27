@@ -1,6 +1,6 @@
 import { Noise } from "noisejs";
 import Tile from "./tile";
-import getRandomTileOfSetElevation from "./generateRiver";
+import generateRiverFromHighPoint from "./generateRiver";
 
 const generateMap = (size, seed) => {
   //import noise from "noisejs";
@@ -23,26 +23,28 @@ const generateMap = (size, seed) => {
       tiles.push(tile);
     }
   }
-  console.log("first stage:", tiles);
+  //console.log("first stage:", tiles);
 
   // second stage: add random minor erosion (up to 10% of tile's height)
   tiles.forEach((tile) => {
     tile.elevation -= Math.random() * (tile.elevation / 25);
-    console.log("eroded");
+    //console.log("eroded");
   });
 
   // generate rivers
-  tiles = getRandomTileOfSetElevation(tiles, size, 0.6);
+  tiles = generateRiverFromHighPoint(tiles, size, 0.6);
+  tiles = generateRiverFromHighPoint(tiles, size, 0.6);
+  tiles = generateRiverFromHighPoint(tiles, size, 0.6);
 
   // third stage: calculate moisture
-  tiles.forEach((tile) => tile.calculateMoisture());
+  tiles.forEach((tile) => tile.calculateMoisture(tiles));
 
   // fourth stage: calculate biomes based on elevation & moisture
 
   // fifth stage: calculate resources based on biome
   tiles.forEach((tile) => tile.calculateResources()); // or is forEach in-place?
 
-  console.log("fifth stage:", tiles);
+  //console.log("fifth stage:", tiles);
   return tiles;
 };
 

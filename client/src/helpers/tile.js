@@ -1,5 +1,6 @@
 import getAdjacentTiles from "../helpers/getAdjacentTiles";
 import chooseAdjacentTileToPopulate from "../helpers/populateTile";
+import calculateTileMoisture from "../helpers/calculateTileMoisture";
 
 class Tile {
   constructor(id, x, y, elevation) {
@@ -22,10 +23,14 @@ class Tile {
     this.isWater = true;
   };
 
-  calculateMoisture = function () {
+  calculateMoisture = function (tiles) {
     // todo
+    this.moisture = calculateTileMoisture(tiles, this);
     if (this.isWater === false) {
       this.isWater = this.elevation < 0.1 && true;
+    }
+    if (this.isWater === true) {
+      this.moisture = 100;
     }
   };
 
