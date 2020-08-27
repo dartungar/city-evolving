@@ -1,6 +1,6 @@
 import { Noise } from "noisejs";
 import Tile from "./tile";
-import generateRiver from "./generateRiver";
+import getRandomTileOfSetElevation from "./generateRiver";
 
 const generateMap = (size, seed) => {
   //import noise from "noisejs";
@@ -32,7 +32,7 @@ const generateMap = (size, seed) => {
   });
 
   // generate rivers
-  tiles = generateRiver(tiles, size, 10);
+  tiles = getRandomTileOfSetElevation(tiles, size, 0.6);
 
   // third stage: calculate moisture
   tiles.forEach((tile) => tile.calculateMoisture());

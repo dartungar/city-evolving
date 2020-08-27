@@ -11,6 +11,7 @@ const BuildingsLayer = ({ sizeInPx }) => {
   const { turns } = gameContext;
 
   const [image, setImage] = useState();
+  //const [imgMirrored, setImageMirrored] = useState();
   const canvasRef = useRef(null);
   const [canvasContext, setCanvasContext] = useState();
 

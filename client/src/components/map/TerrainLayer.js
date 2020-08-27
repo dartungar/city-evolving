@@ -32,9 +32,9 @@ const TerrainLayer = ({ sizeInPx }) => {
 
   const getElevationColor = (tile) => {
     const { elevation, isWater, isRiver } = tile;
-    if (isRiver === true) {
-      return "lightskyblue";
-    }
+    // if (isRiver === true) {
+    //   return "lightskyblue";
+    // }
 
     if (elevation < 0.1 || isWater === true) {
       return "dodgerblue";
